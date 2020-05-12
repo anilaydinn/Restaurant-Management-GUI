@@ -96,7 +96,6 @@ public class LoginPage extends JFrame {
 					}
 					
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
