@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -61,11 +63,20 @@ public class RegisterPage extends JFrame {
 				String password = new String(pfPassword.getPassword());
 				String confirmPassword = new String(pfConfirmPassword.getPassword());
 				
+				if(tfUsername.getText().equals("") || password.equals("") || confirmPassword.equals("")) {
+					JOptionPane.showMessageDialog(null, "You should fill all input !");
+					return;
+				}
+				
 				if(password.equals(confirmPassword)) {
 					try {
 						FileWriter fileWriter = new FileWriter(file,true);
 						fileWriter.write(username + " " + password + "\n");
 						fileWriter.close();
+						JOptionPane.showMessageDialog(null, "You registered successfully !");
+						tfUsername.setText("");
+						pfPassword.setText("");
+						pfConfirmPassword.setText("");
 						
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -74,8 +85,6 @@ public class RegisterPage extends JFrame {
 				else {
 					return;
 				}
-				
-				
 			}
 		});
 		btnRegister.setBounds(324, 82, 113, 25);
@@ -92,5 +101,16 @@ public class RegisterPage extends JFrame {
 		pfConfirmPassword = new JPasswordField();
 		pfConfirmPassword.setBounds(153, 130, 142, 19);
 		contentPane.add(pfConfirmPassword);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LoginPage loginPage = new LoginPage();
+				setVisible(false);
+				loginPage.setVisible(true);
+			}
+		});
+		btnBack.setBounds(324, 127, 117, 25);
+		contentPane.add(btnBack);
 	}
 }

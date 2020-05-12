@@ -65,6 +65,13 @@ public class LoginPage extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				File file = new File("users.txt");
 				String password = new String(pfPassword.getPassword());
+				boolean login = false;
+				
+				if(tfUsername.getText().equals("") || password.equals("")) {
+					JOptionPane.showMessageDialog(null, "Please fill all input !");
+					return;
+				}
+				
 				try {
 					Scanner scanner = new Scanner(new BufferedReader(new FileReader("users.txt")));
 					
@@ -74,15 +81,18 @@ public class LoginPage extends JFrame {
 						
 						if(array[0].equals(tfUsername.getText()) && array[1].equals(password)) {
 							
-							TableSelection tableSelection = new TableSelection();
-							setVisible(false);
-							tableSelection.setVisible(true);
-							return;
-						}
-						else {
-							JOptionPane.showMessageDialog(null, "Please enter correct username and password !");
+							 login = true;
 						}
 						
+					}
+					if(login) {
+						TableSelection tableSelection = new TableSelection();
+						setVisible(false);
+						tableSelection.setVisible(true);
+						return;
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Please enter correct username or password !");
 					}
 					
 				} catch (FileNotFoundException e) {
