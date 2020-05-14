@@ -7,7 +7,7 @@ public class NonAlcoholDrink extends Drink {
 		super(name, price, quantity, volume);
 		this.hot = hot;
 	}
-
+	
 	public boolean isHot() {
 		return hot;
 	}

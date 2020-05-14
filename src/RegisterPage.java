@@ -24,6 +24,7 @@ public class RegisterPage extends JFrame {
 	private JTextField tfUsername;
 	private JPasswordField pfPassword;
 	private JPasswordField pfConfirmPassword;
+	private DatabaseManager databaseManager = DatabaseManager.getDatabaseManager();
 
 	/**
 	 * Create the frame.
@@ -58,32 +59,25 @@ public class RegisterPage extends JFrame {
 		JButton btnRegister = new JButton("Register");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File("users.txt");
 				String username = tfUsername.getText();
 				String password = new String(pfPassword.getPassword());
 				String confirmPassword = new String(pfConfirmPassword.getPassword());
 				
-				if(tfUsername.getText().equals("") || password.equals("") || confirmPassword.equals("")) {
-					JOptionPane.showMessageDialog(null, "You should fill all input !");
-					return;
-				}
-				
 				if(password.equals(confirmPassword)) {
-					try {
-						FileWriter fileWriter = new FileWriter(file,true);
-						fileWriter.write(username + " " + password + "\n");
-						fileWriter.close();
-						JOptionPane.showMessageDialog(null, "You registered successfully !");
-						tfUsername.setText("");
-						pfPassword.setText("");
-						pfConfirmPassword.setText("");
-						
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					
+					databaseManager.addAccount(username, password);
+					JOptionPane.showMessageDialog(null, "Register successful !");
+				}
+				else if(username.equals("")) {
+					
+					JOptionPane.showMessageDialog(null, "Please fill username input !");
+				}
+				else if(password.equals("") || confirmPassword.equals("")) {
+					
+					JOptionPane.showMessageDialog(null, "Please fill all password fields !");
 				}
 				else {
-					return;
+					JOptionPane.showMessageDialog(null, "Passwords are not match !");
 				}
 			}
 		});

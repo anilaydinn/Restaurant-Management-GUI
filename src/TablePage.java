@@ -25,9 +25,9 @@ public class TablePage extends JFrame {
 
 	private JPanel contentPane;
 	private String tableName;
-	private Check check = new Check();
+	private Check check;
 	private JTable orderTable;
-	private File file;
+	private DatabaseManager databaseManager;
 
 	/**
 	 * Create the frame.
@@ -38,8 +38,8 @@ public class TablePage extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.tableName = tableName;
-		
-		
+		check = new Check();
+		databaseManager = DatabaseManager.getDatabaseManager();
 		
 		orderTable = new JTable();
 		orderTable.setModel(new DefaultTableModel(
@@ -122,18 +122,8 @@ public class TablePage extends JFrame {
 		JButton btnWater = new JButton("Water");
 		btnWater.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product water = new NonAlcoholDrink("Water", 2.00, 1, 500, false);
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(water.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-					
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {water.getName(),water.getPrice(),water.getQuantity()});
+				Drink water = new NonAlcoholDrink("Water", 2.00, 1, 500, true);
+				databaseManager.addItemToCheck(tableName, water);
 			}
 		});
 		btnWater.setBounds(57, 39, 139, 25);
@@ -142,19 +132,7 @@ public class TablePage extends JFrame {
 		JButton btnMineralWater = new JButton("Mineral Water");
 		btnMineralWater.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product mineralWater = new NonAlcoholDrink("Mineral Water", 2.50, 1, 250, false);
 				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(mineralWater.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {mineralWater.getName(),mineralWater.getPrice(),mineralWater.getQuantity()});
 			}
 		});
 		btnMineralWater.setBounds(57, 76, 139, 25);
@@ -163,20 +141,7 @@ public class TablePage extends JFrame {
 		JButton btnCoke = new JButton("Coke");
 		btnCoke.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product coke = new NonAlcoholDrink("Coke", 4.00, 1, 330, false);
 				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(coke.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {coke.getName(),coke.getPrice(),coke.getQuantity()});
 			}
 		});
 		btnCoke.setBounds(57, 113, 139, 25);
@@ -185,19 +150,7 @@ public class TablePage extends JFrame {
 		JButton btnTea = new JButton("Tea");
 		btnTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product tea = new NonAlcoholDrink("Tea", 3.00, 1, 100, true);
 				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(tea.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {tea.getName(),tea.getPrice(),tea.getQuantity()});
 			}
 		});
 		btnTea.setBounds(57, 150, 139, 25);
@@ -206,19 +159,6 @@ public class TablePage extends JFrame {
 		JButton btnBeer = new JButton("Beer");
 		btnBeer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product beer = new AlcoholDrink("Beer", 15.00, 1, 500, 5.00);
-				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(beer.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {beer.getName(),beer.getPrice(),beer.getQuantity()});
 				
 			}
 		});
@@ -228,19 +168,6 @@ public class TablePage extends JFrame {
 		JButton btnWine = new JButton("Wine");
 		btnWine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product wine = new AlcoholDrink("Wine", 60.00, 1, 750, 13.00);
-				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(wine.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {wine.getName(),wine.getPrice(),wine.getQuantity()});
 				
 			}
 		});
@@ -250,19 +177,6 @@ public class TablePage extends JFrame {
 		JButton btnRaki = new JButton("Raki");
 		btnRaki.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product raki = new AlcoholDrink("Raki", 230.00, 1, 100, 40.00);
-				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(raki.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {raki.getName(),raki.getPrice(),raki.getQuantity()});
 				
 			}
 		});
@@ -276,19 +190,6 @@ public class TablePage extends JFrame {
 		JButton btnChicken = new JButton("Chicken");
 		btnChicken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product chicken = new Food("Chicken", 12.00, 1, false, 250);
-				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(chicken.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {chicken.getName(),chicken.getPrice(),chicken.getQuantity()});
 				
 			}
 		});
@@ -298,19 +199,6 @@ public class TablePage extends JFrame {
 		JButton btnHamburger = new JButton("Hamburger");
 		btnHamburger.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product hamburger = new Food("Hamburger", 18.00, 1, false, 250);
-				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(hamburger.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {hamburger.getName(),hamburger.getPrice(),hamburger.getQuantity()});
 				
 			}
 		});
@@ -320,19 +208,6 @@ public class TablePage extends JFrame {
 		JButton btnSalad = new JButton("Salad");
 		btnSalad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product salad = new Food("Salad", 5.00, 1, false, 100);
-				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(salad.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {salad.getName(),salad.getPrice(),salad.getQuantity()});
 				
 			}
 		});
@@ -342,19 +217,6 @@ public class TablePage extends JFrame {
 		JButton btnPasta = new JButton("Pasta");
 		btnPasta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product pasta = new Food("Pasta", 10.00, 1, true, 100);
-				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(pasta.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {pasta.getName(),pasta.getPrice(),pasta.getQuantity()});
 				
 			}
 		});
@@ -364,19 +226,6 @@ public class TablePage extends JFrame {
 		JButton btnSteak = new JButton("Steak");
 		btnSteak.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product steak = new Food("Steak", 24.00, 1, false, 200);
-				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(steak.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {steak.getName(),steak.getPrice(),steak.getQuantity()});
 				
 			}
 		});
@@ -386,19 +235,6 @@ public class TablePage extends JFrame {
 		JButton btnFriedPotatoes = new JButton("Fried Potatoes");
 		btnFriedPotatoes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product friedPotatoes = new Food("Fried Potatoes", 8.00, 1, false, 100);
-				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(friedPotatoes.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {friedPotatoes.getName(),friedPotatoes.getPrice(),friedPotatoes.getQuantity()});
 				
 			}
 		});
@@ -408,19 +244,6 @@ public class TablePage extends JFrame {
 		JButton btnMeatball = new JButton("Meatball");
 		btnMeatball.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File file = new File(tableName + ".txt");
-				Product meatball = new Food("Meatball", 25.00, 1, false, 200);
-				
-				try {
-					FileWriter fileWriter = new FileWriter(file,true);
-					fileWriter.write(meatball.toString()+"\n");
-					fileWriter.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				DefaultTableModel model = (DefaultTableModel)orderTable.getModel();
-				model.addRow(new Object[] {meatball.getName(),meatball.getPrice(),meatball.getQuantity()});
 				
 			}
 		});
@@ -428,13 +251,5 @@ public class TablePage extends JFrame {
 		panelFood.add(btnMeatball);
 		
 		
-	}
-	
-	public double getTotalPrice(ArrayList<Double> prices) {
-		double totalprice = 0;
-		for(double i : prices) {
-			totalprice += i;
-		}
-		return totalprice;
 	}
 }
