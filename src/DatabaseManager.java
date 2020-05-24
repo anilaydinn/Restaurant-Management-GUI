@@ -2,6 +2,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.io.IOException;
+import java.sql.Array;
 import java.sql.Connection;
 
 
@@ -76,21 +80,89 @@ public class DatabaseManager {
 		}
 	}
 	
-	public void addItemToCheck(String table_name,Product product) {
+	public void addProductToCheck(Product product,String table_name) {
 		
-		String query = "INSERT INTO Checks (table_name, contains, price) VALUES(?, ?, ?)";
+		String query = "INSERT INTO Checks (table_name,name,quantity,price) VALUES (?,?,?,?)";
 		
 		try {
-			
 			preparedStatement = con.prepareStatement(query);
 			
 			preparedStatement.setString(1, table_name);
-			preparedStatement.setString(2, product.toString());
-			preparedStatement.setDouble(3, product.getPrice());
+			preparedStatement.setString(2, product.getName());
+			preparedStatement.setInt(3, product.getQuantity());
+			preparedStatement.setDouble(4, product.getPrice());
 			
 			preparedStatement.executeUpdate();
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList<Food> getChecks(String tableName) {
+		
+		ArrayList<Food> output = new ArrayList<Food>();
+		String query = "SELECT * FROM Checks WHERE table_name=?";
+		
+		try {
+			preparedStatement = con.prepareStatement(query);
+			
+			preparedStatement.setString(1, tableName);
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				
+				String name = rs.getString("name");
+				int quantity = rs.getInt("quantity");
+				double price = rs.getDouble("price");
+				
+				output.add(new Food(name, price, quantity));
+			}
+			return output;
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public double getTotalPrice(String tableName) {
+		
+		String query = "SELECt * FROM Checks WHERE table_name=?";
+		double totalPrice = 0.0;
+		
+		try {
+			preparedStatement = con.prepareStatement(query);
+			
+			preparedStatement.setString(1, tableName);
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				
+				totalPrice += rs.getDouble("price");
+			}
+			return totalPrice;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return totalPrice;
+		}
+	}
+	
+	public void deleteCheck(String tableName) {
+		
+		String query = "DELETE FROM Checks WHERE table_name=?";
+		
+		try {
+			preparedStatement = con.prepareStatement(query);
+			
+			preparedStatement.setString(1, tableName);
+			
+			preparedStatement.executeUpdate();
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}

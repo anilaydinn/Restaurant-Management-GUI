@@ -1,18 +1,18 @@
 
 public class AlcoholDrink extends Drink {
 
-	private double degree;
+	private String degree;
 	
-	public AlcoholDrink(String name, double price, int quantity, int volume, double degree) {
+	public AlcoholDrink(String name, double price, int quantity, int volume, String degree) {
 		super(name, price, quantity, volume);
 		this.degree = degree;
 	}
 
-	public double getDegree() {
+	public String getDegree() {
 		return degree;
 	}
 
-	public void setDegree(double degree) {
+	public void setDegree(String degree) {
 		this.degree = degree;
 	}
 

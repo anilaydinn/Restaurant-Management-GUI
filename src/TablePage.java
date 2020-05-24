@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Font;
 
 public class TablePage extends JFrame {
 
@@ -27,12 +28,14 @@ public class TablePage extends JFrame {
 	private String tableName;
 	private Check check;
 	private JTable orderTable;
+	private DefaultTableModel model;
 	private DatabaseManager databaseManager;
 
 	/**
 	 * Create the frame.
 	 */
 	public TablePage(String tableName) {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 866, 482);
 		contentPane = new JPanel();
@@ -46,24 +49,21 @@ public class TablePage extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Name", "Price", "Quantity"
+				"Name", "Quantity", "Price"
 			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, Double.class, Integer.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		));
 		orderTable.setBounds(276, 12, 578, 316);
 		contentPane.add(orderTable);
+		model = (DefaultTableModel)orderTable.getModel();	
+		showList();
+		
+		JLabel lblPrice = new JLabel("Price:");
+		lblPrice.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblPrice.setBounds(695, 340, 159, 40);
+		contentPane.add(lblPrice);
+		
+		lblPrice.setText("");
+		lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
 		
 		JPanel panelFood = new JPanel();
 		panelFood.setBounds(12, 12, 252, 316);
@@ -112,7 +112,7 @@ public class TablePage extends JFrame {
 				tableSelection.setVisible(true);
 			}
 		});
-		btnBack.setBounds(251, 343, 117, 25);
+		btnBack.setBounds(286, 350, 117, 25);
 		contentPane.add(btnBack);
 		
 		JLabel lblDrink = new JLabel("Drink");
@@ -122,8 +122,12 @@ public class TablePage extends JFrame {
 		JButton btnWater = new JButton("Water");
 		btnWater.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Drink water = new NonAlcoholDrink("Water", 2.00, 1, 500, true);
-				databaseManager.addItemToCheck(tableName, water);
+				Product water = new NonAlcoholDrink("Water",2.00,1,500,false);
+				refreshTable();
+				databaseManager.addProductToCheck(water, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnWater.setBounds(57, 39, 139, 25);
@@ -132,7 +136,12 @@ public class TablePage extends JFrame {
 		JButton btnMineralWater = new JButton("Mineral Water");
 		btnMineralWater.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product mineralWater = new NonAlcoholDrink("Mineral Water",3.00,1,250,false);
+				refreshTable();
+				databaseManager.addProductToCheck(mineralWater, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnMineralWater.setBounds(57, 76, 139, 25);
@@ -141,7 +150,12 @@ public class TablePage extends JFrame {
 		JButton btnCoke = new JButton("Coke");
 		btnCoke.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product coke = new NonAlcoholDrink("Coke",5.00,1,330,false);
+				refreshTable();
+				databaseManager.addProductToCheck(coke, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnCoke.setBounds(57, 113, 139, 25);
@@ -150,7 +164,12 @@ public class TablePage extends JFrame {
 		JButton btnTea = new JButton("Tea");
 		btnTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product tea = new NonAlcoholDrink("Tea",2.50,1,200,false);
+				refreshTable();
+				databaseManager.addProductToCheck(tea, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnTea.setBounds(57, 150, 139, 25);
@@ -159,7 +178,12 @@ public class TablePage extends JFrame {
 		JButton btnBeer = new JButton("Beer");
 		btnBeer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product beer = new AlcoholDrink("Beer",18.00,1,500,"5.00");
+				refreshTable();
+				databaseManager.addProductToCheck(beer, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnBeer.setBounds(57, 187, 139, 25);
@@ -168,7 +192,12 @@ public class TablePage extends JFrame {
 		JButton btnWine = new JButton("Wine");
 		btnWine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product wine = new AlcoholDrink("Wine",40.00,1,750,"12.50");
+				refreshTable();
+				databaseManager.addProductToCheck(wine, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnWine.setBounds(57, 224, 139, 25);
@@ -177,7 +206,12 @@ public class TablePage extends JFrame {
 		JButton btnRaki = new JButton("Raki");
 		btnRaki.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product raki = new AlcoholDrink("Raki",230.00,1,1000,"40.00");
+				refreshTable();
+				databaseManager.addProductToCheck(raki, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnRaki.setBounds(57, 261, 139, 25);
@@ -190,7 +224,12 @@ public class TablePage extends JFrame {
 		JButton btnChicken = new JButton("Chicken");
 		btnChicken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product chicken = new Food("Chicken",16.00,1,false);
+				refreshTable();
+				databaseManager.addProductToCheck(chicken, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnChicken.setBounds(57, 39, 139, 25);
@@ -199,7 +238,12 @@ public class TablePage extends JFrame {
 		JButton btnHamburger = new JButton("Hamburger");
 		btnHamburger.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product hamburger = new Food("Hamburger",18.00,1,false);
+				refreshTable();
+				databaseManager.addProductToCheck(hamburger, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnHamburger.setBounds(57, 76, 139, 25);
@@ -208,7 +252,12 @@ public class TablePage extends JFrame {
 		JButton btnSalad = new JButton("Salad");
 		btnSalad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product salad = new Food("Salad",5.00,1,true);
+				refreshTable();
+				databaseManager.addProductToCheck(salad, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnSalad.setBounds(57, 113, 139, 25);
@@ -217,7 +266,12 @@ public class TablePage extends JFrame {
 		JButton btnPasta = new JButton("Pasta");
 		btnPasta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product pasta = new Food("Pasta",10.00,1,true);
+				refreshTable();
+				databaseManager.addProductToCheck(pasta, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnPasta.setBounds(57, 150, 139, 25);
@@ -226,7 +280,12 @@ public class TablePage extends JFrame {
 		JButton btnSteak = new JButton("Steak");
 		btnSteak.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product steak = new Food("Steak",25.00,1,false);
+				refreshTable();
+				databaseManager.addProductToCheck(steak, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnSteak.setBounds(57, 187, 139, 25);
@@ -235,7 +294,12 @@ public class TablePage extends JFrame {
 		JButton btnFriedPotatoes = new JButton("Fried Potatoes");
 		btnFriedPotatoes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product friedPotatoes = new Food("Fried Potatoes",8.00,1,true);
+				refreshTable();
+				databaseManager.addProductToCheck(friedPotatoes, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnFriedPotatoes.setBounds(57, 224, 139, 25);
@@ -244,12 +308,46 @@ public class TablePage extends JFrame {
 		JButton btnMeatball = new JButton("Meatball");
 		btnMeatball.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Product meatball = new Food("Meatball",20.00,1,false);
+				refreshTable();
+				databaseManager.addProductToCheck(meatball, tableName);
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+				showList();
 			}
 		});
 		btnMeatball.setBounds(57, 261, 139, 25);
 		panelFood.add(btnMeatball);
 		
+		JButton btnPay = new JButton("Pay");
+		btnPay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				databaseManager.deleteCheck(tableName);
+				refreshTable();
+				lblPrice.setText("");
+				lblPrice.setText("Price: " + Double.toString(databaseManager.getTotalPrice(tableName)) + " TL");
+			}
+		});
+		btnPay.setBounds(560, 349, 117, 25);
+		contentPane.add(btnPay);
+	}
+	
+	public void showList() {
 		
+		ArrayList<Food> checkList = new ArrayList<Food>();
+		
+		checkList = databaseManager.getChecks(tableName);
+		
+		for(Food product : checkList) {
+				
+			Object[] willAdd = {product.getName(),product.getQuantity(),product.getPrice()};
+				
+			model.addRow(willAdd);
+		}
+	}
+	
+	public void refreshTable() {
+		
+		model.setRowCount(0);
 	}
 }

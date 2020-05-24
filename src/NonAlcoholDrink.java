@@ -15,9 +15,19 @@ public class NonAlcoholDrink extends Drink {
 	public void setHot(boolean hot) {
 		this.hot = hot;
 	}
+	
+	public String hot() {
+		
+		if(this.hot) {
+			return "Sıcak";
+		}
+		else {
+			return "Soğuk";
+		}
+	}
 
 	@Override
 	public String toString() {
-		return getName() + " " + getPrice() + " " + getQuantity() + " " + getVolume() + " " + this.hot;
+		return getName() + " " + getPrice() + " " + getQuantity() + " " + getVolume() + " " + hot();
 	}
 }
