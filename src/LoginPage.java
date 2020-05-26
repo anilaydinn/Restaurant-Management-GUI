@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -49,7 +51,7 @@ public class LoginPage extends JFrame {
 	 */
 	public LoginPage() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 439, 176);
+		setBounds(100, 100, 383, 329);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -58,7 +60,7 @@ public class LoginPage extends JFrame {
 		
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblLogin.setBounds(186, 12, 61, 35);
+		lblLogin.setBounds(158, 12, 61, 35);
 		contentPane.add(lblLogin);
 		
 		JButton btnLogin = new JButton("Login");
@@ -81,19 +83,22 @@ public class LoginPage extends JFrame {
 				}
 			}
 		});
-		btnLogin.setBounds(164, 107, 114, 25);
+		btnLogin.setBounds(37, 254, 142, 25);
 		contentPane.add(btnLogin);
 		
 		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setBounds(81, 53, 85, 15);
+		lblUsername.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblUsername.setBounds(37, 179, 103, 35);
 		contentPane.add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(81, 80, 85, 15);
+		lblPassword.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblPassword.setBounds(37, 207, 103, 35);
 		contentPane.add(lblPassword);
 		
 		tfUsername = new JTextField();
-		tfUsername.setBounds(164, 51, 114, 19);
+		tfUsername.setFont(new Font("Dialog", Font.PLAIN, 16));
+		tfUsername.setBounds(158, 179, 197, 28);
 		contentPane.add(tfUsername);
 		tfUsername.setColumns(10);
 		
@@ -105,11 +110,18 @@ public class LoginPage extends JFrame {
 				registerPage.setVisible(true);
 			}
 		});
-		btnRegister.setBounds(313, 107, 114, 25);
+		btnRegister.setBounds(223, 254, 142, 25);
 		contentPane.add(btnRegister);
 		
 		pfPassword = new JPasswordField();
-		pfPassword.setBounds(164, 78, 114, 19);
+		pfPassword.setFont(new Font("Dialog", Font.PLAIN, 16));
+		pfPassword.setBounds(158, 211, 197, 28);
 		contentPane.add(pfPassword);
+		
+		JLabel lblLoginPicture = new JLabel("");
+		lblLoginPicture.setBounds(144, 59, 125, 108);
+		contentPane.add(lblLoginPicture);
+		ImageIcon restaurantLogo = new ImageIcon("./images/restaurant.png");
+		lblLoginPicture.setIcon(restaurantLogo);
 	}
 }

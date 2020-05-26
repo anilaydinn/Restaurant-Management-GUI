@@ -166,4 +166,28 @@ public class DatabaseManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public boolean isFull(String tableName) {
+		
+		String query = "SELECT * FROM Checks WHERE table_name=?";
+		
+		try {
+			preparedStatement = con.prepareStatement(query);
+			
+			preparedStatement.setString(1, tableName);
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
